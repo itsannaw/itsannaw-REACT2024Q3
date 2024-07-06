@@ -1,0 +1,20 @@
+.preview-card {
+	padding: 20px 30px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	display: flex;
+	justify-content: center;
+	max-width: 250px;
+	width: 100%;
+}
+
+.preview-card:hover {
+	border: 1px solid #646363;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.preview-card__image {
+	width: 200px;
+	height: 250px;
+}

@@ -12,7 +12,15 @@
 		"plugin:import/typescript",
 		"prettier"
 	],
-	"overrides": [],
+	"include": ["src"],
+	"overrides": [
+		{
+			"files": ["src/**/*.ts", "src/**/*.tsx"],
+			"parserOptions": {
+				"project": "./tsconfig.json"
+			}
+		}
+	],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"ecmaVersion": "latest",
@@ -49,6 +57,6 @@
 			"version": "detect"
 		}
 	},
-	"ignorePatterns": ["vite.config.ts"],
+	"ignorePatterns": ["dist", ".eslintrc.json"],
 	"root": true
 }
