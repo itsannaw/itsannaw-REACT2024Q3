@@ -1,4 +1,4 @@
-import { CAT_API } from "../const/api";
+import CAT_API from "../const/api";
 
 export interface Breed {
 	weight: {
@@ -20,6 +20,17 @@ export interface Image {
 export const fetchImages = async (): Promise<Image[]> => {
 	try {
 		const response = await fetch(CAT_API.fetchImages);
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error("Error fetching images:", error);
+		throw error;
+	}
+};
+
+export const fetchSearch = async (query: string): Promise<Image[]> => {
+	try {
+		const response = await fetch(CAT_API.fetchSearch(query));
 		const data = await response.json();
 		return data;
 	} catch (error) {

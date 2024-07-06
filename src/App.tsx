@@ -1,7 +1,7 @@
 import { Component } from "react";
 import SearchInput from "./components/forms/SearchInput/SearchInput";
 import PreviewCard from "./components/cards/PreviewCard/PreviewCard";
-import { fetchImages, Image } from "./services/imageService";
+import { fetchImages, fetchSearch, Image } from "./services/imageService";
 import "./App.css";
 
 interface AppState {
@@ -29,9 +29,17 @@ class App extends Component<{}, AppState> {
 		}
 	};
 
+	handleSearch = async (query: string) => {
+		try {
+			const images = await fetchSearch(query);
+			this.setState({ images });
+		} catch (error) {
+			console.error("Error searching images:", error);
+		}
+	};
+
 	render() {
 		const { images } = this.state;
-		console.log(images);
 		return (
 			<div className="app">
 				<div>
@@ -39,7 +47,7 @@ class App extends Component<{}, AppState> {
 						<img className="logo" src="/black-cat.svg" alt="Black cat" />
 						<h1>Cat Search</h1>
 					</div>
-					<SearchInput />
+					<SearchInput onSearch={this.handleSearch} />
 				</div>
 				<div className="preview-cards-container">
 					{images?.length > 0 ? (

@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import "./SearchInput.style.css";
 
+interface Props {
+	onSearch: (query: string) => void;
+}
+
 interface State {
 	query: string;
 }
 
-class SearchInput extends Component<{}, State> {
-	constructor(props: {}) {
+class SearchInput extends Component<Props, State> {
+	constructor(props: Props) {
 		super(props);
 		this.state = {
 			query: "",
@@ -19,15 +23,18 @@ class SearchInput extends Component<{}, State> {
 
 	handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		console.log("Searching for:", this.state.query);
+		const { query } = this.state;
+		const { onSearch } = this.props;
+		onSearch(query);
 	};
 
 	render() {
+		const { query } = this.state;
 		return (
 			<form className="search-input" onSubmit={this.handleSearch}>
 				<input
 					type="text"
-					value={this.state.query}
+					value={query}
 					onChange={this.handleInputChange}
 					placeholder="Looking for kitties..."
 					className="search-input__field"
