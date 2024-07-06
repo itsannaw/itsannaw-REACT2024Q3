@@ -1,8 +1,7 @@
 {
 	"env": {
 		"browser": true,
-		"es6": true,
-		"node": true
+		"es6": true
 	},
 	"extends": [
 		"airbnb",
@@ -12,21 +11,12 @@
 		"plugin:import/typescript",
 		"prettier"
 	],
-	"include": ["src"],
-	"overrides": [
-		{
-			"files": ["src/**/*.ts", "src/**/*.tsx"],
-			"parserOptions": {
-				"project": "./tsconfig.json"
-			}
-		}
-	],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
-		"ecmaVersion": "latest",
-		"sourceType": "module",
-		"project": "./tsconfig.json",
-		"extraFileExtensions": [".md", ".json"]
+		"project": "./tsconfig.app.json",
+		"tsconfigRootDir": "./",
+		"ecmaVersion": 2023,
+		"sourceType": "module"
 	},
 	"plugins": [
 		"react",
@@ -42,6 +32,7 @@
 		"react-hooks/exhaustive-deps": "warn",
 		"react/react-in-jsx-scope": "off",
 		"react-compiler/react-compiler": "error",
+		"@typescript-eslint/dot-notation": "error",
 		"@typescript-eslint/triple-slash-reference": "off",
 		"import/extensions": [
 			"error",
@@ -57,6 +48,6 @@
 			"version": "detect"
 		}
 	},
-	"ignorePatterns": ["dist", ".eslintrc.json"],
+	"ignorePatterns": ["vite.config.ts"],
 	"root": true
 }

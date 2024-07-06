@@ -17,13 +17,14 @@ class SearchInput extends Component<{}, State> {
 		this.setState({ query: event.target.value });
 	};
 
-	handleSearch = () => {
+	handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
 		console.log("Searching for:", this.state.query);
 	};
 
 	render() {
 		return (
-			<div className="search-input">
+			<form className="search-input" onSubmit={this.handleSearch}>
 				<input
 					type="text"
 					value={this.state.query}
@@ -31,10 +32,10 @@ class SearchInput extends Component<{}, State> {
 					placeholder="Looking for kitties..."
 					className="search-input__field"
 				/>
-				<button onClick={this.handleSearch} className="search-input__button">
+				<button type="submit" className="search-input__button">
 					Search
 				</button>
-			</div>
+			</form>
 		);
 	}
 }

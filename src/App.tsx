@@ -1,15 +1,53 @@
 import { Component } from "react";
 import SearchInput from "./components/forms/SearchInput/SearchInput";
-
-import "./App.css";
 import PreviewCard from "./components/cards/PreviewCard/PreviewCard";
+import { fetchImages, Image } from "./services/imageService";
+import "./App.css";
 
-class App extends Component {
+interface AppState {
+	images: Image[];
+}
+
+class App extends Component<{}, AppState> {
+	constructor(props: {}) {
+		super(props);
+		this.state = {
+			images: [],
+		};
+	}
+
+	componentDidMount() {
+		this.loadImages();
+	}
+
+	loadImages = async () => {
+		try {
+			const images = await fetchImages();
+			this.setState({ images });
+		} catch (error) {
+			console.error("Error loading images:", error);
+		}
+	};
+
 	render() {
+		const { images } = this.state;
+		console.log(images);
 		return (
 			<div className="app">
-				<SearchInput />
-				<PreviewCard />
+				<div>
+					<div className="logo-container">
+						<img className="logo" src="/black-cat.svg" alt="Black cat" />
+						<h1>Cat Search</h1>
+					</div>
+					<SearchInput />
+				</div>
+				<div className="preview-cards-container">
+					{images?.length > 0 ? (
+						images.map((image) => <PreviewCard key={image.id} image={image} />)
+					) : (
+						<p>No images available</p>
+					)}
+				</div>
 			</div>
 		);
 	}
