@@ -12,13 +12,16 @@ interface State {
 class SearchInput extends Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
+		const savedQuery = localStorage.getItem("searchQuery");
 		this.state = {
-			query: "",
+			query: savedQuery || "",
 		};
 	}
 
 	handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		this.setState({ query: event.target.value });
+		const newQuery = event.target.value;
+		this.setState({ query: newQuery });
+		localStorage.setItem("searchQuery", newQuery);
 	};
 
 	handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
