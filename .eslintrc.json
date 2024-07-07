@@ -1,0 +1,72 @@
+{
+	"env": {
+		"browser": true,
+		"es6": true
+	},
+	"extends": [
+		"airbnb",
+		"plugin:react/recommended",
+		"plugin:@typescript-eslint/recommended",
+		"airbnb-typescript",
+		"plugin:import/typescript",
+		"prettier"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"project": "./tsconfig.json",
+		"tsconfigRootDir": "./",
+		"ecmaVersion": 2023,
+		"sourceType": "module"
+	},
+	"plugins": [
+		"react",
+		"react-hooks",
+		"react-compiler",
+		"@typescript-eslint",
+		"prettier",
+		"import"
+	],
+	"rules": {
+		"semi": [2, "always"],
+		"react-hooks/rules-of-hooks": "error",
+		"react-hooks/exhaustive-deps": "warn",
+		"react/react-in-jsx-scope": "off",
+		"react-compiler/react-compiler": "error",
+		"@typescript-eslint/dot-notation": "error",
+		"@typescript-eslint/triple-slash-reference": "off",
+		"react/prefer-stateless-function": "off",
+		"import/extensions": [
+			"error",
+			"ignorePackages",
+			{
+				"ts": "never",
+				"tsx": "never"
+			}
+		],
+		"import/order": [
+			"error",
+			{
+				"alphabetize": {
+					"order": "ignore",
+					"caseInsensitive": false
+				},
+				"newlines-between": "always",
+				"groups": [
+					"builtin",
+					"external",
+					"internal",
+					"parent",
+					"sibling",
+					"index"
+				]
+			}
+		]
+	},
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
+	},
+	"ignorePatterns": ["vite.config.ts"],
+	"root": true
+}
