@@ -188,7 +188,16 @@ section div {
 
 .signature p {
 	text-align: center;
-	font-family: Helvetica, Arial, Sans-Serif;
-	font-size: 0.85em;
+	font-size: 1.2em;
 	color: #0e0e0e;
+}
+
+.signature p button {
+	padding: 0;
+	border: none;
+	border-bottom: 2px solid #856262;
+	font: inherit;
+	color: #856262;
+	background-color: transparent;
+	cursor: pointer;
 }

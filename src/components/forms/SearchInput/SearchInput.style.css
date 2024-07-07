@@ -1,5 +1,6 @@
 .search-input {
 	display: flex;
+	position: relative;
 	max-width: 400px;
 	align-items: center;
 	justify-content: center;
@@ -26,4 +27,12 @@
 
 .search-input__button:hover {
 	background-color: #514040;
+}
+
+.help-block {
+	position: absolute;
+	top: 40px;
+	left: 10px;
+	max-width: 200px;
+	font-size: 12px;
 }

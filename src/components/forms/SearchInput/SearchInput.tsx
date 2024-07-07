@@ -21,15 +21,14 @@ class SearchInput extends Component<Props, State> {
 	handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const newQuery = event.target.value;
 		this.setState({ query: newQuery });
-		localStorage.setItem("searchQuery", newQuery);
+		localStorage.setItem("searchQuery", newQuery.trim());
 	};
 
 	handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		let { query } = this.state;
-		query = query.trim();
+		const { query } = this.state;
 		const { onSearch } = this.props;
-		onSearch(query);
+		onSearch(query.trim());
 	};
 
 	render() {
@@ -37,12 +36,15 @@ class SearchInput extends Component<Props, State> {
 		return (
 			<form className="search-input" onSubmit={this.handleSearch}>
 				<input
-					type="text"
+					type="search"
 					value={query}
 					onChange={this.handleInputChange}
-					placeholder="Looking for kitties..."
+					placeholder="Find a cat breed..."
 					className="search-input__field"
 				/>
+				<span className="help-block">
+					For example, beng, abys, aege, acur, bsho, cymr, lihu...
+				</span>
 				<button type="submit" className="search-input__button">
 					Search
 				</button>

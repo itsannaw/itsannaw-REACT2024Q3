@@ -3,6 +3,10 @@ import { Component } from "react";
 import "./ReservePage.style.css";
 
 class ReservePage extends Component {
+	static handleReload = () => {
+		window.location.reload();
+	};
+
 	render() {
 		return (
 			<section>
@@ -26,7 +30,13 @@ class ReservePage extends Component {
 				</div>
 
 				<div className="signature">
-					<p>Oops, something&apos;s wrong! Try reloading the page.</p>
+					<p>
+						Oops, something&apos;s wrong! Try{" "}
+						<button type="button" onClick={ReservePage.handleReload}>
+							reload the page
+						</button>
+						.
+					</p>
 				</div>
 			</section>
 		);
