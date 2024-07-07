@@ -42,6 +42,24 @@
 				"ts": "never",
 				"tsx": "never"
 			}
+		],
+		"import/order": [
+			"error",
+			{
+				"alphabetize": {
+					"order": "ignore",
+					"caseInsensitive": false
+				},
+				"newlines-between": "always",
+				"groups": [
+					"builtin",
+					"external",
+					"internal",
+					"parent",
+					"sibling",
+					"index"
+				]
+			}
 		]
 	},
 	"settings": {

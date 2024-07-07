@@ -1,4 +1,5 @@
 import { Component } from "react";
+
 import "./PreviewCard.style.css";
 import { Image } from "../../../services/imageService";
 
@@ -7,10 +8,6 @@ interface PreviewCardProps {
 }
 
 class PreviewCard extends Component<PreviewCardProps> {
-	constructor(props: PreviewCardProps) {
-		super(props);
-	}
-
 	render() {
 		const { image } = this.props;
 		return (

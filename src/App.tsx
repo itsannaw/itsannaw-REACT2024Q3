@@ -1,4 +1,5 @@
 import { Component } from "react";
+
 import SearchInput from "./components/forms/SearchInput/SearchInput";
 import PreviewCard from "./components/cards/PreviewCard/PreviewCard";
 import { fetchImages, fetchSearch, Image } from "./services/imageService";
@@ -8,8 +9,8 @@ interface AppState {
 	images: Image[];
 }
 
-class App extends Component<{}, AppState> {
-	constructor(props: {}) {
+class App extends Component<object, AppState> {
+	constructor(props: object) {
 		super(props);
 		this.state = {
 			images: [],
