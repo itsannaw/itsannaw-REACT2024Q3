@@ -26,7 +26,8 @@ class SearchInput extends Component<Props, State> {
 
 	handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		const { query } = this.state;
+		let { query } = this.state;
+		query = query.trim();
 		const { onSearch } = this.props;
 		onSearch(query);
 	};

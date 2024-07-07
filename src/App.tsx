@@ -4,10 +4,15 @@ import SearchInput from "./components/forms/SearchInput/SearchInput";
 import PreviewCard from "./components/cards/PreviewCard/PreviewCard";
 import { fetchImages, fetchSearch, Image } from "./services/imageService";
 import "./App.css";
+import Loader from "./components/loader/Loader";
+import ErrorBoundary from "./components/error-boundary/ErrorBoundary";
+import ReservePage from "./pages/reserve/ReservePage";
+import TriggerButton from "./components/buttons/TriggerButton";
 
 interface AppState {
 	images: Image[];
 	isLoading: boolean;
+	showErrorTrigger: boolean;
 }
 
 class App extends Component<object, AppState> {
@@ -16,6 +21,7 @@ class App extends Component<object, AppState> {
 		this.state = {
 			images: [],
 			isLoading: false,
+			showErrorTrigger: false,
 		};
 	}
 
@@ -30,9 +36,10 @@ class App extends Component<object, AppState> {
 			const images = savedQuery
 				? await fetchImages(savedQuery)
 				: await fetchImages();
-			this.setState({ images, isLoading: false });
+			this.setState({ images });
 		} catch (error) {
 			console.error("Error loading images:", error);
+		} finally {
 			this.setState({ isLoading: false });
 		}
 	};
@@ -41,37 +48,50 @@ class App extends Component<object, AppState> {
 		this.setState({ isLoading: true });
 		try {
 			const images = await fetchSearch(query);
-			this.setState({ images, isLoading: false });
+			this.setState({ images });
 		} catch (error) {
 			console.error("Error searching images:", error);
+		} finally {
 			this.setState({ isLoading: false });
 		}
 	};
 
+	triggerError = () => {
+		this.setState({ showErrorTrigger: true });
+	};
+
 	render() {
-		const { images, isLoading } = this.state;
+		const { images, isLoading, showErrorTrigger } = this.state;
 		return (
 			<div className="app">
-				<div>
-					<div className="logo-container">
-						<img className="logo" src="/black-cat.svg" alt="Black cat" />
-						<h1>Cat Search</h1>
+				<ErrorBoundary fallback={<ReservePage />}>
+					<div>
+						<div className="logo-container">
+							<img className="logo" src="/black-cat.svg" alt="Black cat" />
+							<h1>Cat Search</h1>
+						</div>
+						<div className="search-container">
+							<SearchInput onSearch={this.handleSearch} />
+							<TriggerButton
+								triggerError={this.triggerError}
+								showErrorTrigger={showErrorTrigger}
+							/>
+						</div>
 					</div>
-					<SearchInput onSearch={this.handleSearch} />
-				</div>
-				<div className="preview-cards-container">
-					{(() => {
-						if (isLoading) {
-							return <p>Loading...</p>;
-						}
-						if (images && images.length > 0) {
-							return images.map((image) => (
-								<PreviewCard key={image.id} image={image} />
-							));
-						}
-						return <p>No images available</p>;
-					})()}
-				</div>
+					<div className="preview-cards-container">
+						{(() => {
+							if (isLoading) {
+								return <Loader />;
+							}
+							if (images && images.length > 0) {
+								return images.map((image) => (
+									<PreviewCard key={image.id} image={image} />
+								));
+							}
+							return <p>No images available</p>;
+						})()}
+					</div>
+				</ErrorBoundary>
 			</div>
 		);
 	}
