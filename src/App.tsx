@@ -7,6 +7,7 @@ import "./App.css";
 
 interface AppState {
 	images: Image[];
+	isLoading: boolean;
 }
 
 class App extends Component<object, AppState> {
@@ -14,6 +15,7 @@ class App extends Component<object, AppState> {
 		super(props);
 		this.state = {
 			images: [],
+			isLoading: false,
 		};
 	}
 
@@ -22,25 +24,32 @@ class App extends Component<object, AppState> {
 	}
 
 	loadImages = async () => {
+		this.setState({ isLoading: true });
 		try {
-			const images = await fetchImages();
-			this.setState({ images });
+			const savedQuery = localStorage.getItem("searchQuery");
+			const images = savedQuery
+				? await fetchImages(savedQuery)
+				: await fetchImages();
+			this.setState({ images, isLoading: false });
 		} catch (error) {
 			console.error("Error loading images:", error);
+			this.setState({ isLoading: false });
 		}
 	};
 
 	handleSearch = async (query: string) => {
+		this.setState({ isLoading: true });
 		try {
 			const images = await fetchSearch(query);
-			this.setState({ images });
+			this.setState({ images, isLoading: false });
 		} catch (error) {
 			console.error("Error searching images:", error);
+			this.setState({ isLoading: false });
 		}
 	};
 
 	render() {
-		const { images } = this.state;
+		const { images, isLoading } = this.state;
 		return (
 			<div className="app">
 				<div>
@@ -51,11 +60,17 @@ class App extends Component<object, AppState> {
 					<SearchInput onSearch={this.handleSearch} />
 				</div>
 				<div className="preview-cards-container">
-					{images?.length > 0 ? (
-						images.map((image) => <PreviewCard key={image.id} image={image} />)
-					) : (
-						<p>No images available</p>
-					)}
+					{(() => {
+						if (isLoading) {
+							return <p>Loading...</p>;
+						}
+						if (images && images.length > 0) {
+							return images.map((image) => (
+								<PreviewCard key={image.id} image={image} />
+							));
+						}
+						return <p>No images available</p>;
+					})()}
 				</div>
 			</div>
 		);

@@ -17,9 +17,9 @@ export interface Image {
 	breeds: Breed[];
 }
 
-export const fetchImages = async (): Promise<Image[]> => {
+export const fetchImages = async (query?: string): Promise<Image[]> => {
 	try {
-		const response = await fetch(CAT_API.fetchImages);
+		const response = await fetch(CAT_API.fetchImages(query));
 		const data = await response.json();
 		return data;
 	} catch (error) {
