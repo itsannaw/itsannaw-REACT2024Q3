@@ -34,6 +34,7 @@
 		"react-compiler/react-compiler": "error",
 		"@typescript-eslint/dot-notation": "error",
 		"@typescript-eslint/triple-slash-reference": "off",
+		"react/function-component-definition": "off",
 		"react/prefer-stateless-function": "off",
 		"import/extensions": [
 			"error",

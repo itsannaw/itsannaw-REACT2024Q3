@@ -1,11 +1,5 @@
-import { Component } from "react";
-
 import "./Loader.style.css";
 
-class Loader extends Component {
-	render() {
-		return <span className="loader" />;
-	}
-}
+const Loader = () => <span className="loader" />;
 
 export default Loader;

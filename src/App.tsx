@@ -1,100 +1,78 @@
-import { Component } from "react";
+import { useState, useEffect } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 import SearchInput from "./components/forms/SearchInput/SearchInput";
 import PreviewCard from "./components/cards/PreviewCard/PreviewCard";
 import { fetchImages, fetchSearch, Image } from "./services/imageService";
 import "./App.css";
 import Loader from "./components/loader/Loader";
-import ErrorBoundary from "./components/error-boundary/ErrorBoundary";
 import ReservePage from "./pages/reserve/ReservePage";
-import TriggerButton from "./components/buttons/TriggerButton";
 
-interface AppState {
-	images: Image[];
-	isLoading: boolean;
-	showErrorTrigger: boolean;
-}
+const App = () => {
+	const [images, setImages] = useState<Image[]>([]);
+	const [isLoading, setIsLoading] = useState(false);
 
-class App extends Component<object, AppState> {
-	constructor(props: object) {
-		super(props);
-		this.state = {
-			images: [],
-			isLoading: false,
-			showErrorTrigger: false,
-		};
-	}
-
-	componentDidMount() {
-		this.loadImages();
-	}
-
-	loadImages = async () => {
-		this.setState({ isLoading: true });
+	const loadImages = async () => {
+		setIsLoading(true);
 		try {
 			const savedQuery = localStorage.getItem("searchQuery");
-			const images = savedQuery
+			const fetchedImages = savedQuery
 				? await fetchImages(savedQuery)
 				: await fetchImages();
-			this.setState({ images });
+			setImages(fetchedImages);
 		} catch (error) {
 			console.error("Error loading images:", error);
 		} finally {
-			this.setState({ isLoading: false });
+			setIsLoading(false);
 		}
 	};
 
-	handleSearch = async (query: string) => {
-		this.setState({ isLoading: true });
+	useEffect(() => {
+		loadImages();
+	}, []);
+
+	const handleSearch = async (query: string) => {
+		setIsLoading(true);
 		try {
-			const images = await fetchSearch(query);
-			this.setState({ images });
+			const searchedImages = await fetchSearch(query);
+			setImages(searchedImages);
 		} catch (error) {
 			console.error("Error searching images:", error);
 		} finally {
-			this.setState({ isLoading: false });
+			setIsLoading(false);
 		}
 	};
 
-	triggerError = () => {
-		this.setState({ showErrorTrigger: true });
+	const renderContent = () => {
+		if (isLoading) {
+			return <Loader />;
+		}
+
+		if (images.length > 0) {
+			return images.map((image) => (
+				<PreviewCard key={image.id} image={image} />
+			));
+		}
+
+		return <p>No images available</p>;
 	};
 
-	render() {
-		const { images, isLoading, showErrorTrigger } = this.state;
-		return (
-			<div className="app">
-				<ErrorBoundary fallback={<ReservePage />}>
-					<div>
-						<div className="logo-container">
-							<img className="logo" src="/black-cat.svg" alt="Black cat" />
-							<h1>Cat Search</h1>
-						</div>
-						<div className="search-container">
-							<SearchInput onSearch={this.handleSearch} />
-							<TriggerButton
-								triggerError={this.triggerError}
-								showErrorTrigger={showErrorTrigger}
-							/>
-						</div>
+	return (
+		<div className="app">
+			<ErrorBoundary fallback={<ReservePage />}>
+				<div>
+					<div className="logo-container">
+						<img className="logo" src="/black-cat.svg" alt="Black cat" />
+						<h1>Cat Search</h1>
 					</div>
-					<div className="preview-cards-container">
-						{(() => {
-							if (isLoading) {
-								return <Loader />;
-							}
-							if (images && images.length > 0) {
-								return images.map((image) => (
-									<PreviewCard key={image.id} image={image} />
-								));
-							}
-							return <p>No images available</p>;
-						})()}
+					<div className="search-container">
+						<SearchInput onSearch={handleSearch} />
 					</div>
-				</ErrorBoundary>
-			</div>
-		);
-	}
-}
+				</div>
+				<div className="preview-cards-container">{renderContent()}</div>
+			</ErrorBoundary>
+		</div>
+	);
+};
 
 export default App;
