@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./PreviewCard.style.css";
+import "./PreviewCard.styles.scss";
 import { Image } from "../../../services/imageService";
 
 interface PreviewCardProps {
@@ -25,7 +25,7 @@ const PreviewCard: React.FC<PreviewCardProps> = ({ image }) => (
 				</>
 			) : (
 				<>
-					<h2>Funny cat</h2>
+					<h2>Cat</h2>
 					<p>Weight: big positive</p>
 				</>
 			)}

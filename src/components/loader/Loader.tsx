@@ -1,5 +1,5 @@
-import "./Loader.style.css";
+import styles from "./Loader.module.scss";
 
-const Loader = () => <span className="loader" />;
+const Loader = () => <span className={styles.loader} />;
 
 export default Loader;

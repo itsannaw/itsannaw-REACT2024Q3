@@ -1,4 +1,4 @@
-import CAT_API from "../const/api";
+import CAT_API from "../api/cards";
 
 export interface Breed {
 	weight: {

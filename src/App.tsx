@@ -4,7 +4,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import SearchInput from "./components/forms/SearchInput/SearchInput";
 import PreviewCard from "./components/cards/PreviewCard/PreviewCard";
 import { fetchImages, fetchSearch, Image } from "./services/imageService";
-import "./App.css";
+import "./App.scss";
 import Loader from "./components/loader/Loader";
 import ReservePage from "./pages/reserve/ReservePage";
 
@@ -60,14 +60,15 @@ const App = () => {
 	return (
 		<div className="app">
 			<ErrorBoundary fallback={<ReservePage />}>
-				<div>
-					<div className="logo-container">
-						<img className="logo" src="/black-cat.svg" alt="Black cat" />
-						<h1>Cat Search</h1>
+				<div className="logo-container">
+					<img className="logo" src="/logo.svg" alt="pokeball" />
+					<div className="logo-text">
+						<h1>Pokédex</h1>
+						<p>Find your pokemon!</p>
 					</div>
-					<div className="search-container">
-						<SearchInput onSearch={handleSearch} />
-					</div>
+				</div>
+				<div className="search-container">
+					<SearchInput onSearch={handleSearch} />
 				</div>
 				<div className="preview-cards-container">{renderContent()}</div>
 			</ErrorBoundary>

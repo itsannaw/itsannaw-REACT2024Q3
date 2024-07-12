@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "./SearchInput.style.css";
+
+import styles from "./SearchInput.module.scss";
 
 interface SearchInputProps {
 	onSearch: (query: string) => void;
@@ -22,18 +23,15 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
 	};
 
 	return (
-		<form className="search-input" onSubmit={handleSearch}>
+		<form className={styles.searchInput} onSubmit={handleSearch}>
 			<input
 				type="search"
 				value={query}
 				onChange={handleInputChange}
-				placeholder="Find a cat breed..."
-				className="search-input__field"
+				placeholder="Search query..."
+				className={styles.searchInputField}
 			/>
-			<span className="help-block">
-				For example, beng, abys, aege, acur, bsho, cymr, lihu...
-			</span>
-			<button type="submit" className="search-input__button">
+			<button type="submit" className={styles.searchInputButton}>
 				Search
 			</button>
 		</form>

@@ -1,0 +1,34 @@
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 80vh;
+}
+
+.pokeball {
+	width: 300px;
+	height: 300px;
+}
+
+.signature {
+	margin: auto;
+	bottom: 50px;
+	top: auto;
+}
+
+.signature p {
+	text-align: center;
+	font-size: 1.2em;
+	color: #0e0e0e;
+}
+
+.signature p button {
+	padding: 0;
+	border: none;
+	border-bottom: 2px solid #e80808;
+	font: inherit;
+	color: #e80808;
+	background-color: transparent;
+	cursor: pointer;
+}
