@@ -36,30 +36,28 @@
 		"@typescript-eslint/triple-slash-reference": "off",
 		"react/function-component-definition": "off",
 		"react/prefer-stateless-function": "off",
-		"import/extensions": [
-			"error",
-			"ignorePackages",
-			{
-				"ts": "never",
-				"tsx": "never"
-			}
-		],
+		"import/extensions": "off",
 		"import/order": [
-			"error",
+			"warn",
 			{
-				"alphabetize": {
-					"order": "ignore",
-					"caseInsensitive": false
-				},
-				"newlines-between": "always",
 				"groups": [
 					"builtin",
 					"external",
-					"internal",
 					"parent",
 					"sibling",
-					"index"
-				]
+					"index",
+					"object",
+					"type"
+				],
+				"pathGroups": [
+					{
+						"pattern": "@/**/**",
+						"group": "parent",
+						"position": "before"
+					}
+				],
+				"alphabetize": { "order": "asc", "caseInsensitive": true },
+				"newlines-between": "always"
 			}
 		]
 	},
