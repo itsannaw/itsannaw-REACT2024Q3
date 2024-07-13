@@ -1,35 +1,23 @@
 import React from "react";
 
 import "./PreviewCard.styles.scss";
-import { Image } from "../../../services/imageService";
+import { PokemonCard } from "@/types/pokemonCard";
 
 interface PreviewCardProps {
-	image: Image;
+	card: PokemonCard;
 }
 
-const PreviewCard: React.FC<PreviewCardProps> = ({ image }) => (
+const PreviewCard: React.FC<PreviewCardProps> = ({ card }) => (
 	<div className="preview-card">
 		<div className="preview-card__image-container">
 			<img
 				className="preview-card__image"
-				src={image.url}
-				alt={image.breeds.length > 0 ? image.breeds[0].name : "Cat"}
+				src={card.images.large}
+				alt={card.name}
 			/>
 		</div>
 
-		<div className="preview-card__info">
-			{image.breeds.length > 0 ? (
-				<>
-					<h2>{image.breeds[0].name}</h2>
-					<p>Weight: {image.breeds[0].weight.metric} kg</p>
-				</>
-			) : (
-				<>
-					<h2>Cat</h2>
-					<p>Weight: big positive</p>
-				</>
-			)}
-		</div>
+		<div className="preview-card__info" />
 	</div>
 );
 
