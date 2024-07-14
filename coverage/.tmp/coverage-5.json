@@ -1,0 +1,38 @@
+{
+	"result": [
+		{
+			"scriptId": "1006",
+			"url": "file:///home/ater/study/itsannaw-REACT2024Q3/src/pages/home/HomePage.test.tsx",
+			"functions": [
+				{
+					"functionName": "",
+					"ranges": [{ "startOffset": 0, "endOffset": 11995, "count": 1 }],
+					"isBlockCoverage": true
+				},
+				{
+					"functionName": "",
+					"ranges": [
+						{ "startOffset": 13, "endOffset": 11995, "count": 1 },
+						{ "startOffset": 867, "endOffset": 11994, "count": 0 }
+					],
+					"isBlockCoverage": true
+				},
+				{
+					"functionName": "",
+					"ranges": [{ "startOffset": 922, "endOffset": 1058, "count": 0 }],
+					"isBlockCoverage": false
+				},
+				{
+					"functionName": "",
+					"ranges": [{ "startOffset": 1096, "endOffset": 1227, "count": 0 }],
+					"isBlockCoverage": false
+				},
+				{
+					"functionName": "",
+					"ranges": [{ "startOffset": 1251, "endOffset": 5053, "count": 0 }],
+					"isBlockCoverage": false
+				}
+			]
+		}
+	]
+}

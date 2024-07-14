@@ -2,7 +2,6 @@ import { Suspense, useEffect, useCallback } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useSearchParams, Outlet, useNavigate } from "react-router-dom";
 
-import HomeContent from "@/components/content/HomeContent/HomeContent";
 import SearchInput from "@/components/forms/SearchInput/SearchInput";
 import Header from "@/components/header/Header";
 import Loader from "@/components/loader/Loader";
@@ -10,6 +9,7 @@ import useLoadCards from "@/hooks/card/LoadCards/useLoadCards";
 import usePagination from "@/hooks/usePagination";
 
 import styles from "./HomePage.module.scss";
+import HomeContent from "@/components/content/HomeContent/HomeContent";
 
 const HomePage: React.FC = () => {
 	const { pagination, setPagination, query, page, handlePageChange } =
@@ -42,16 +42,10 @@ const HomePage: React.FC = () => {
 		navigate(`/?q=${query}&page=${page}`);
 	}, [navigate, query, page]);
 
-	const handleLeftSectionClick = useCallback(() => {
-		if (selectedCardId) {
-			handleCloseDetails();
-		}
-	}, [selectedCardId, handleCloseDetails]);
-
 	return (
 		<div className={`${styles.app} ${selectedCardId && styles.isDetailsOpen}`}>
 			<ErrorBoundary fallback={<div>Something went wrong</div>}>
-				<div className={styles.leftSection} onClick={handleLeftSectionClick}>
+				<div className={styles.leftSection}>
 					<Header />
 					<div className={styles.searchContainer}>
 						<SearchInput onSearch={handleSearch} />
