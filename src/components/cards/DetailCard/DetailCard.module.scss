@@ -1,0 +1,21 @@
+.detailCard {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+
+	img {
+		width: 300px;
+		height: 400px;
+	}
+
+	div {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+
+		span {
+			font-weight: semibold;
+		}
+	}
+}

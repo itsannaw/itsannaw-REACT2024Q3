@@ -1,0 +1,25 @@
+@import "@styles/variables", "@styles/mixins";
+
+.searchInput {
+	display: flex;
+	position: relative;
+	max-width: 400px;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+}
+
+.searchInputField {
+	@include input-style;
+	flex: 1;
+}
+
+.searchInputButton {
+	@include button-style;
+	background-color: $button-bg-color;
+	color: $button-color;
+
+	&:hover {
+		background-color: $button-hover-bg-color;
+	}
+}
