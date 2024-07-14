@@ -29,17 +29,6 @@ const Pagination: React.FC<PaginationProps> = ({
 
 	const pageRange = getPageRange();
 
-	const renderPageButton = (page: number) => (
-		<button
-			key={page}
-			type="button"
-			className={page === currentPage ? styles.activePage : styles.pageButton}
-			onClick={() => onPageChange(page)}
-		>
-			{page}
-		</button>
-	);
-
 	return (
 		<div className={styles.pagination}>
 			{currentPage > 1 && (
@@ -52,7 +41,18 @@ const Pagination: React.FC<PaginationProps> = ({
 				</button>
 			)}
 
-			{pageRange.map(renderPageButton)}
+			{pageRange.map((page) => (
+				<button
+					type="button"
+					key={page}
+					className={
+						page === currentPage ? styles.activePage : styles.pageButton
+					}
+					onClick={() => onPageChange(page)}
+				>
+					{page}
+				</button>
+			))}
 
 			{currentPage < totalPages && (
 				<button

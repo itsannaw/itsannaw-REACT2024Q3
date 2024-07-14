@@ -1,96 +1,48 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { useSearchParams } from "react-router-dom";
 
-import fetchCards from "@/api/cards";
-import PreviewCard from "@/components/cards/PreviewCard/PreviewCard";
 import SearchInput from "@/components/forms/SearchInput/SearchInput";
-import Loader from "@/components/loader/Loader";
-import Pagination from "@/components/pagination/Pagination";
-import { PokemonCard } from "@/types/pokemonCard";
+import Header from "@/components/header/Header";
+import useLoadCards from "@/hooks/useLoadCards";
+import usePagination from "@/hooks/usePagination";
 
+import Content from "./Content";
 import styles from "./HomePage.module.scss";
 
 const HomePage = () => {
-	const [cards, setCards] = useState<PokemonCard[]>([]);
-	const [pagination, setPagination] = useState({
-		currentPage: 1,
-		totalPages: 10,
-	});
-	const [isLoading, setIsLoading] = useState(false);
-
-	const loadCards = useCallback(
-		async (query = "") => {
-			setIsLoading(true);
-			try {
-				const fetchedData = await fetchCards(
-					pagination.currentPage,
-					20,
-					query ? `name:${query}` : undefined
-				);
-				setCards(fetchedData.data);
-				setPagination((prev) => ({
-					...prev,
-					totalPages: Math.ceil(fetchedData.totalCount / 20),
-				}));
-			} catch (error) {
-				console.error("Error loading cards:", error);
-			} finally {
-				setIsLoading(false);
-			}
-		},
-		[pagination.currentPage]
-	);
+	const { pagination, setPagination, query, page, handlePageChange } =
+		usePagination();
+	const { cards, isLoading, loadCards } = useLoadCards();
+	const [, setSearchParams] = useSearchParams();
 
 	useEffect(() => {
-		const savedQuery = localStorage.getItem("searchQuery") || "";
-		loadCards(savedQuery);
-	}, [pagination.currentPage, loadCards]);
+		const loadData = async () => {
+			const totalPages = await loadCards(query, page);
+			setPagination((prev) => ({ ...prev, totalPages }));
+		};
 
-	const handleSearch = async (query: string) => {
-		loadCards(query);
-	};
+		loadData();
+	}, [query, page, loadCards, setPagination]);
 
-	const handlePageChange = (page: number) => {
-		setPagination((prev) => ({ ...prev, currentPage: page }));
-	};
-
-	const renderContent = () => {
-		if (isLoading) {
-			return <Loader />;
-		}
-
-		if (cards.length > 0) {
-			return (
-				<>
-					{cards.map((card) => (
-						<PreviewCard key={card.id} card={card} />
-					))}
-					<Pagination
-						totalPages={pagination.totalPages}
-						currentPage={pagination.currentPage}
-						onPageChange={handlePageChange}
-					/>
-				</>
-			);
-		}
-
-		return <p>No cards available</p>;
+	const handleSearch = (searchQuery: string) => {
+		setPagination((prev) => ({ ...prev, currentPage: 1 }));
+		setSearchParams({ q: searchQuery, page: "1" });
 	};
 
 	return (
 		<div className={styles.app}>
 			<ErrorBoundary fallback={<div>Something went wrong</div>}>
-				<div className={styles.logoContainer}>
-					<img className={styles.logo} src="/logo.svg" alt="pokeball" />
-					<div className={styles.logoText}>
-						<h1>Pokédex</h1>
-						<p>Find your pokemon!</p>
-					</div>
-				</div>
+				<Header />
 				<div className={styles.searchContainer}>
 					<SearchInput onSearch={handleSearch} />
 				</div>
-				<div className={styles.previewCardsContainer}>{renderContent()}</div>
+				<Content
+					isLoading={isLoading}
+					cards={cards}
+					pagination={pagination}
+					handlePageChange={handlePageChange}
+				/>
 			</ErrorBoundary>
 		</div>
 	);
