@@ -5,7 +5,7 @@ import Loader from "@/components/loader/Loader";
 import Pagination from "@/components/pagination/Pagination";
 import { PokemonCard } from "@/types/pokemonCard";
 
-import styles from "./HomePage.module.scss";
+import styles from "./HomeContent.module.scss";
 
 interface ContentProps {
 	isLoading: boolean;
@@ -15,7 +15,7 @@ interface ContentProps {
 	onCardClick: (id: string) => void;
 }
 
-const Content: React.FC<ContentProps> = ({
+const HomeContent: React.FC<ContentProps> = ({
 	isLoading,
 	cards,
 	pagination,
@@ -48,4 +48,4 @@ const Content: React.FC<ContentProps> = ({
 	return <p>No cards available</p>;
 };
 
-export default Content;
+export default HomeContent;

@@ -2,7 +2,7 @@ import React from "react";
 import { useSearchParams } from "react-router-dom";
 
 import Loader from "@/components/loader/Loader";
-import useDetailCard from "@/hooks/useDetailCard";
+import useDetailCard from "@/hooks/card/DetailCard/useDetailCard";
 
 import styles from "./DetailCard.module.scss";
 
@@ -23,6 +23,18 @@ const DetailCard: React.FC = () => {
 		<div className={styles.detailCard}>
 			<h1>{card.name}</h1>
 			<img src={card.images?.large} alt={card.name} />
+			<div>
+				<span>
+					<b>HP: </b>
+					{card.hp || "N/A"}
+				</span>
+				<span>
+					<b>Rarity:</b> {card.rarity || "N/A"}
+				</span>
+				<span>
+					<b>Description:</b> {card.flavorText || "N/A"}
+				</span>
+			</div>
 		</div>
 	);
 };

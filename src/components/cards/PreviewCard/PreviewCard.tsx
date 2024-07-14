@@ -1,23 +1,24 @@
 import React from "react";
 
-import "./PreviewCard.styles.scss";
 import { PokemonCard } from "@/types/pokemonCard";
+
+import styles from "./PreviewCard.module.scss";
 
 interface PreviewCardProps {
 	card: PokemonCard;
 }
 
 const PreviewCard: React.FC<PreviewCardProps> = ({ card }) => (
-	<div className="preview-card">
-		<div className="preview-card__image-container">
+	<div className={styles.previewCard}>
+		<div className={styles.previewCardImageContainer}>
 			<img
-				className="preview-card__image"
+				className={styles.previewCardImage}
 				src={card.images.large}
 				alt={card.name}
 			/>
 		</div>
 
-		<div className="preview-card__info" />
+		<div className={styles.previewCardInfo} />
 	</div>
 );
 

@@ -2,13 +2,13 @@ import { Suspense, useEffect, useCallback } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useSearchParams, Outlet, useNavigate } from "react-router-dom";
 
+import HomeContent from "@/components/content/HomeContent/HomeContent";
 import SearchInput from "@/components/forms/SearchInput/SearchInput";
 import Header from "@/components/header/Header";
 import Loader from "@/components/loader/Loader";
-import useLoadCards from "@/hooks/useLoadCards";
+import useLoadCards from "@/hooks/card/LoadCards/useLoadCards";
 import usePagination from "@/hooks/usePagination";
 
-import Content from "./Content";
 import styles from "./HomePage.module.scss";
 
 const HomePage: React.FC = () => {
@@ -56,7 +56,7 @@ const HomePage: React.FC = () => {
 					<div className={styles.searchContainer}>
 						<SearchInput onSearch={handleSearch} />
 					</div>
-					<Content
+					<HomeContent
 						isLoading={isLoading}
 						cards={cards}
 						pagination={pagination}
@@ -68,7 +68,7 @@ const HomePage: React.FC = () => {
 					<div className={styles.detailsSection}>
 						<Suspense fallback={<Loader />}>
 							<button type="button" onClick={handleCloseDetails}>
-								Close
+								<img src="/close.svg" alt="Close" />
 							</button>
 							<Outlet />
 						</Suspense>
