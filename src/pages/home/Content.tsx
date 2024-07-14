@@ -1,4 +1,5 @@
 import React from "react";
+
 import PreviewCard from "@/components/cards/PreviewCard/PreviewCard";
 import Loader from "@/components/loader/Loader";
 import Pagination from "@/components/pagination/Pagination";
@@ -11,6 +12,7 @@ interface ContentProps {
 	cards: PokemonCard[];
 	pagination: { currentPage: number; totalPages: number };
 	handlePageChange: (page: number) => void;
+	onCardClick: (id: string) => void;
 }
 
 const Content: React.FC<ContentProps> = ({
@@ -18,6 +20,7 @@ const Content: React.FC<ContentProps> = ({
 	cards,
 	pagination,
 	handlePageChange,
+	onCardClick,
 }) => {
 	if (isLoading) {
 		return <Loader />;
@@ -25,10 +28,12 @@ const Content: React.FC<ContentProps> = ({
 
 	if (cards.length > 0) {
 		return (
-			<>
+			<div>
 				<div className={styles.previewCardsContainer}>
 					{cards.map((card) => (
-						<PreviewCard key={card.id} card={card} />
+						<div key={card.id} onClick={() => onCardClick(card.id)}>
+							<PreviewCard card={card} />
+						</div>
 					))}
 				</div>
 				<Pagination
@@ -36,7 +41,7 @@ const Content: React.FC<ContentProps> = ({
 					currentPage={pagination.currentPage}
 					onPageChange={handlePageChange}
 				/>
-			</>
+			</div>
 		);
 	}
 

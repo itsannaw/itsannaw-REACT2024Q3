@@ -1,6 +1,10 @@
 import api from "./settings";
 
-const fetchCards = async (page: number, pageSize: number, q?: string) => {
+export const fetchCards = async (
+	page: number,
+	pageSize: number,
+	q?: string
+) => {
 	try {
 		const response = await api.get("cards", {
 			params: {
@@ -16,4 +20,12 @@ const fetchCards = async (page: number, pageSize: number, q?: string) => {
 	}
 };
 
-export default fetchCards;
+export const fetchCardDetails = async (id: string) => {
+	try {
+		const response = await api.get(`cards/${id}`);
+		return response.data.data;
+	} catch (error) {
+		console.error("Error fetching card details:", error);
+		throw error;
+	}
+};

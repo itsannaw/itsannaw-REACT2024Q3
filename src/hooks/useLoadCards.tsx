@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-import fetchCards from "@/api/cards";
+import { fetchCards } from "@/api/cards";
 import { PokemonCard } from "@/types/pokemonCard";
 
 const useLoadCards = () => {
